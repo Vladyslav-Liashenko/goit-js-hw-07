@@ -35,6 +35,7 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const galleryContainer = document.querySelector(".gallery");
+const galleryElement = [];
 
 galleryItems.forEach(item => {
     const galleryItemElement = document.createElement('div');
@@ -49,9 +50,11 @@ galleryItems.forEach(item => {
 
     linkElement.appendChild(imageElement);
     galleryItemElement.appendChild(linkElement);
-
-    galleryContainer.appendChild(galleryItemElement);
+    galleryElement.push(galleryItemElement);
 });
+    galleryContainer.append(...galleryElement);
+
+
 
 const bigImageContainer = document.createElement('div');
 bigImageContainer.className = 'big-image';
@@ -66,7 +69,7 @@ const imageElements = galleryContainer.querySelectorAll('.gallery-item img');
 
 // Додаємо обробник події для кожного зображення
 imageElements.forEach(image => {
-  image.addEventListener('mouseenter', () => {
+  image.addEventListener('click', () => {
       bigImage.src = image.src.replace('__480', '_1280');
     // Замінюємо мініатюру на велике зображення
     bigImage.alt = image.alt;
@@ -74,9 +77,6 @@ imageElements.forEach(image => {
     // Показуємо велике зображення
   });
 
-  image.addEventListener('mouseleave', () => {
-    bigImageContainer.style.display = 'none'; // Приховуємо велике зображення
-  });
 });
 
 console.log(galleryItems);
