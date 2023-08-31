@@ -38,47 +38,39 @@ const galleryContainer = document.querySelector(".gallery");
 const galleryElement = [];
 
 galleryItems.forEach(item => {
-    const galleryItemElement = document.createElement('div');
-    galleryItemElement.className = 'gallery__item';
-
-    const imageElement = document.createElement('img');
-    imageElement.src = item.preview;
-    imageElement.alt = item.description;
-
-    const linkElement = document.createElement('a');
-    linkElement.href = item.original;
-
-    linkElement.appendChild(imageElement);
-    galleryItemElement.appendChild(linkElement);
-    galleryElement.push(galleryItemElement);
+  const galleryItemElement = document.createElement('li');
+  galleryItemElement.className = 'gallery__item';
+  const link = document.createElement('a');
+  link.className = 'gallery__link';
+  link.setAttribute("href", item.original);
+  const imageElement = document.createElement('img');
+  imageElement.src = item.preview;
+  imageElement.alt = item.description;
+  imageElement.setAttribute("data-src", item.original);
+  imageElement.className = 'gallery__image';
+  galleryItemElement.appendChild(link);
+  link.appendChild(imageElement);
+  galleryElement.push(galleryItemElement);
 });
-    galleryContainer.append(...galleryElement);
+  galleryContainer.append(...galleryElement);
 
-
-
-const bigImageContainer = document.createElement('div');
-bigImageContainer.className = 'big-image';
-
-const bigImage = document.createElement('img');
-bigImageContainer.appendChild(bigImage);
-
-galleryContainer.appendChild(bigImageContainer);
-
-// Отримуємо всі елементи зображень
-const imageElements = galleryContainer.querySelectorAll('.gallery-item img');
-
-// Додаємо обробник події для кожного зображення
-imageElements.forEach(image => {
-  image.addEventListener('click', () => {
-      bigImage.src = image.src.replace('__480', '_1280');
-    // Замінюємо мініатюру на велике зображення
-    bigImage.alt = image.alt;
-      bigImageContainer.style.display = 'block';
-    // Показуємо велике зображення
-  });
-
-});
-
+  galleryContainer.addEventListener("click", openmodal);
+  function openmodal(event) {
+  event.preventDefault();
+  const src = event.target.dataset.src;
+  const instance = basicLightbox.create(`
+    <div class="modal">
+        <img src="${src}" alt="${event.target.alt} href="${src}">
+    </div>
+`)
+  instance.show(() => {
+    document.addEventListener("keydown", (event) => {
+      if (event.keyCode === 27) {
+        instance.close()
+      }
+    });
+  }); 
+}
 console.log(galleryItems);
 
 
