@@ -56,13 +56,17 @@ galleryItems.forEach(item => {
 
   galleryContainer.addEventListener("click", openmodal);
   function openmodal(event) {
-  event.preventDefault();
-  const src = event.target.dataset.src;
-  const instance = basicLightbox.create(`
-    <div class="modal">
-        <img src="${src}" alt="${event.target.alt} href="${src}">
-    </div>
-`)
+    event.preventDefault();
+    if (event.target.nodeName === "IMG") { 
+    const src = event.target.dataset.src;
+    console.log(event);
+    const instance = basicLightbox.create(`
+      <div class="modal">
+          <img src="${src}" alt="${event.target.alt} href="${src}">
+      </div>
+  `);
+  };
+
   instance.show(() => {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {

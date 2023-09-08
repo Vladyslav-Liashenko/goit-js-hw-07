@@ -21,14 +21,14 @@ galleryItems.forEach(item => {
 });
   galleryContainer.append(...galleryElement);
 
-let gallery = new SimpleLightbox('.gallery a', { captionsData: "alt" });
-gallery.on('show.simplelightbox', function () {
-    setTimeout(function () {
-    },250);
-});
+let gallery = new SimpleLightbox('.gallery a', { captionsData: "alt", captionDelay: 250 });
+// gallery.on('show.simplelightbox', function () {
+//     // setTimeout(function () {
+//     // },250);
+// });
 
-gallery.on('error.simplelightbox', function (e) {
-	console.log(e);
-});
+// gallery.on('error.simplelightbox', function (e) {
+// 	console.log(e);
+// });
 
 console.log(galleryItems);
